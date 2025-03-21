@@ -4,6 +4,8 @@ import pandas as pd
 import numpy as np
 from PIL import Image
 
+st.set_page_config(page_title="Platform for Risk Prediction of Macrosomia",layout="wide",initial_sidebar_state='auto')
+
 # Load models
 @st.cache_resource
 def load_models():
@@ -12,8 +14,6 @@ def load_models():
     return model, scaler
 
 model, scaler = load_models()
-
-st.set_page_config(page_title="Platform for Risk Prediction of Macrosomia",layout="wide",initial_sidebar_state='auto')
 
 # Sidebar
 with st.sidebar:
