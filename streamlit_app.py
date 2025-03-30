@@ -47,10 +47,10 @@ with col2:
     
 with col3:
         st.header("Fetal Ultrasound")
-        placental_thickness = st.number_input("Placental Thickness (mm)", 10.0, 50.0, 25.0)
+        placental_thickness = st.number_input("Placental Thickness (mm)", 10.0, 40.0, 22.0)
         abdominal_circumference = st.number_input("Abdominal Circumference (mm)", 200.0, 400.0, 300.0)
         biparietal_diameter = st.number_input("Biparietal Diameter (mm)", 100.0, 500.0, 300.0)
-        femur_length = st.number_input("Femur Length (mm)", 100.0, 500.0, 300.0)
+        femur_length = st.number_input("Femur Length (mm)", 0.0, 300.0, 100.0)
         sd = st.number_input("Umbilical Artery S/D", 0.0, 8.0, 2.0)
         fetal_position = st.selectbox("Fetal Position", ["Cephalic", "Non-Cephalic"], index=0)
         gender = st.selectbox("Baby Gender", ["Male", "Female"], index=0)
