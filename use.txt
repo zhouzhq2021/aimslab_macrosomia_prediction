@@ -1,6 +1,0 @@
-python -m venv new_env
-source new_env/bin/activate  # Linux/Mac
-# 或
-new_env\Scripts\activate    # Windows
-pip install numpy streamlit pandas scikit-learn
-
