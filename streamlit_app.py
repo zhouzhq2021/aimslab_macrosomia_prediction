@@ -33,25 +33,24 @@ with col1:
         st.header("Maternal Characteristics")
 
         bmi = st.number_input("BMI", 15.0, 40.0, 25.0)
-        fasting_glucose = st.number_input("Fasting Glucose (mmol/L)", 3.0, 10.0, 5.0)
         parity = st.selectbox("Pregnant Woman's Parity", [0, 1, 2, 3], index=0)
         
 with col2:
-        st.header("Maternal Metabolism")
+        st.header("Laboratory Examinations")
 
         TPOAb = st.selectbox("Thyroid Peroxidase Antibodies", ["Negative", "Positive"], index=0)
-        anti_tpo = st.selectbox("Anti-thyroid Peroxidase Antibodies", ["Negative", "Positive"], index=0)
         urine_ketone_bodies = st.selectbox("Max Intensity of Urine Ketone Bodies", ["Negative", "+", "++", "+++", "++++"], index=0)
+        urine_glucose = st.selectbox("Max Intensity of Urine Glucose", ["Negative", "+", "++", "+++", "++++"], index=0)
         ft4 = st.number_input("Free FT4 (pmol/L)", 5.0, 20.0, 12.0)
+        fasting_glucose = st.number_input("Fasting Glucose (mmol/L)", 3.0, 10.0, 5.0)
         
     
 with col3:
-        st.header("Fetal Ultrasound")
+        st.header("Echography")
         placental_thickness = st.number_input("Placental Thickness (mm)", 10.0, 40.0, 22.0)
         abdominal_circumference = st.number_input("Abdominal Circumference (mm)", 200.0, 400.0, 300.0)
+        head_circumference = st.number_input("Head Circumference (mm)", 200.0, 400.0, 300.0)
         biparietal_diameter = st.number_input("Biparietal Diameter (mm)", 100.0, 500.0, 300.0)
-        femur_length = st.number_input("Femur Length (mm)", 0.0, 300.0, 100.0)
-        sd = st.number_input("Umbilical Artery S/D", 0.0, 8.0, 2.0)
         fetal_position = st.selectbox("Fetal Position", ["Cephalic", "Non-Cephalic"], index=0)
         gender = st.selectbox("Baby Gender", ["Male", "Female"], index=0)
         
@@ -61,6 +60,7 @@ fetal_position_map = {"Cephalic": 0, "Non-Cephalic": 1}
 tpoab_map = {"Negative": 0, "Positive": 1}
 anti_tpo_map = {"Negative": 0, "Positive": 1}
 urine_ketone_bodies_map = {"Negative": 0, "+": 1, "++": 2, "+++": 3, "++++": 4}
+urine_glucose_map = {"Negative": 0, "+": 1, "++": 2, "+++": 3, "++++": 4}
 
 columns_to_normalize = ['病人年龄', 'BMI', '空腹葡萄糖', '10-20周游离FT4',
                         '25-32周婴儿双顶径', '25-32周婴儿头围', '25-32周婴儿腹围', 
@@ -72,11 +72,11 @@ data_to_normalize = {
         "空腹葡萄糖": fasting_glucose,
         "10-20周游离FT4": ft4,
         "25-32周婴儿双顶径": biparietal_diameter,
-        "25-32周婴儿头围": 0,
+        "25-32周婴儿头围": head_circumference,
         "25-32周婴儿腹围": abdominal_circumference,
-        "25-32周婴儿股骨长": femur_length,
+        "25-32周婴儿股骨长": 0,
         "25-32周婴儿胎盘厚": placental_thickness,
-        '25-32周婴儿脐动脉S/D': sd,
+        '25-32周婴儿脐动脉S/D': 0,
         '25-32周婴儿胎心': 0,
         '1小时葡萄糖': 0,
         '2小时葡萄糖': 0,
@@ -87,8 +87,9 @@ other_data = {
         "孕妇产次": parity,
         "25-32周婴儿胎位": fetal_position_map[fetal_position],  # 映射胎位
         "1-20周甲状腺过氧化物酶抗体": tpoab_map[TPOAb],  # 映射TPOAb
-        "1-20周抗甲状腺过氧化物酶抗体": anti_tpo_map[anti_tpo],  # 映射Anti-TPO
-        "1-32周尿酮体最大阳性强度": urine_ketone_bodies_map[urine_ketone_bodies]  # 映射尿糖
+        "1-32周尿酮体最大阳性强度": urine_ketone_bodies_map[urine_ketone_bodies],
+        "1-32周尿葡萄糖最大阳性强度": urine_glucose_map[urine_glucose]
+
     }
 
 data_to_normalize_df = pd.DataFrame([data_to_normalize])
@@ -96,7 +97,7 @@ data_to_normalize_df = pd.DataFrame([data_to_normalize])
 scaled_features = scaler.transform(data_to_normalize_df)
 
 input_df_1 = pd.DataFrame(scaled_features, columns=data_to_normalize_df.columns)[
-        ["BMI", "空腹葡萄糖", "25-32周婴儿胎盘厚", "25-32周婴儿腹围", "10-20周游离FT4", "25-32周婴儿双顶径", "25-32周婴儿股骨长",'25-32周婴儿脐动脉S/D']
+        ["BMI", "空腹葡萄糖", "25-32周婴儿胎盘厚", '25-32周婴儿头围', "25-32周婴儿腹围", "10-20周游离FT4", "25-32周婴儿双顶径"]
     ]
 
 other_data_df = pd.DataFrame([other_data])
