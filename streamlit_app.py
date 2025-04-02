@@ -55,7 +55,7 @@ with col3:
         gender = st.selectbox("Baby Gender", ["Male", "Female"], index=0)
         
     
-gender_map = {"Male": 0, "Female": 1}
+gender_map = {"Male": 1, "Female": 0}
 fetal_position_map = {"Cephalic": 0, "Non-Cephalic": 1}
 tpoab_map = {"Negative": 0, "Positive": 1}
 anti_tpo_map = {"Negative": 0, "Positive": 1}
